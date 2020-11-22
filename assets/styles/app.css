@@ -1,0 +1,6 @@
+@import "../../node_modules/bootstrap";
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+
+body {
+  background-color: lightgray;
+}
