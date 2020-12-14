@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<div class="container p-5 text-center">
+		<div class="row justify-content-md-center">
+			<div class="col-6">
+				<form method="post">
+					<h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+					<label for="inputUsername">Identifiant</label>
+					<input type="text" value="" name="username" id="inputUsername" class="form-control mb-3" required autofocus>
+					<label for="inputPassword">Mot de passe</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" required>
+					{% if error %}
+						<div class="alert alert-danger mt-3">
+							{{ error }}
+						</div>
+					{% endif %}
+					<button class="btn btn-primary mt-4" type="submit">
+						Se connecter
+					</button>
+					<div>
+						<a href="{{path('reset_password')}}" style="color : red; font-size: 12px;">
+							Mot de passe oublié
+						</a>
+					</div>
+					<div class="mt-2">
+						Vous n'avez pas encore de compte ?
+						<a href="{{path('app_register')}}">Inscris-toi</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

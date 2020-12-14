@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Tricks;
 
 class BaseController extends AbstractController
 {
@@ -12,6 +13,12 @@ class BaseController extends AbstractController
      */
     public function getHome()
     {
-        return $this->render('index.html.twig');
+        $tricks = $this->getDoctrine()
+            ->getRepository(Tricks::class)
+            ->findBy(array(), array('id' => 'DESC'), 3);
+
+        return $this->render('index.html.twig', [
+            "tricks" => $tricks
+        ]);
     }
 }

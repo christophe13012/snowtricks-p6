@@ -7,4 +7,37 @@
 			<em>Bienvenue dans votre communauté de snowboaders</em>
 		</h3>
 	</header>
+	<div class="container">
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators my-4">
+				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+			</ol>
+
+			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+				<div class="carousel-inner">
+					{% for trick in tricks %}
+						<div class="carousel-item  {%if loop.index == 1%} active {%endif%}">
+							<img class="d-block w-100" src="{{ trick.url}}" alt="First slide" style="width:100%; height: 700px;">
+							<div class="carousel-caption d-none d-sm-block bg-dark mb-4">
+								<h5>{{ trick.name}}</h5>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
+		<div class="text-center">
+			<a href="{{ path('tricks') }}" class="btn btn-primary mt-3">En voir plus</a>
+		</div>
+	</div>
 {% endblock %}
