@@ -19,7 +19,8 @@
 	</div>
 	<div class="ml-5" style="">
 		{% if app.session.get('user') %}
-			<span class="mr-2" style="" href="/logout">{{app.session.get('user').username}}</span>
+			<span class="mr-2" style="">Avatar</span>
+			<span class="mr-2" style="">{{app.session.get('user').username}}</span>
 			<a href="/logout" class="btn btn-outline-danger btn-sm" style="" href="{{path('logout')}}">Se déconnecter</a>
 		{% else %}
 			<a class="btn btn-outline-primary btn-sm" style="" href="{{path('app_login')}}">Se connecter</a>
