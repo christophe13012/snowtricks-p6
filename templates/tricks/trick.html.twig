@@ -10,8 +10,30 @@
 			<span class="badge badge-warning p-2 float-right">{{ category }}</span>
 		</p>
 		<h1 style="display: inline-block">{{ trick.name|capitalize }}</h1>
-		<p class="card-text mt-3">{{ trick.description }}</p>
-		<img class="card-img-top imgTrickDetail mt-3" src="{{ trick.url }}" alt="Card image cap">
+		<p class="card-text mt-3">{{ trick.description | raw }}</p>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card mt-2" style="width: 18rem">
+					<img class="card-img-top" style="height: 175px" src="{{ trick.mainImage }}" alt="Card image cap">
+				</div>
+			</div>
+			{% for photo in photos %}
+				<div class="col-sm-4">
+					<div class="card mt-2" style="width: 18rem">
+						<img class="card-img-top" style="height: 175px" src="{{ photo.url }}" alt="Card image cap">
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="row">
+			{% for video in videos %}
+				<div class="col-sm-4">
+					<div class="card mt-2" style="width: 18rem">
+						{{ video.url | raw }}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 		{% if app.user %}
 			<a href="{{ path("update", { 'id': trick.id }) }}" class="btn btn-info mt-3">Editer</a>
 			<a href="{{ path("delete", { 'id': trick.id }) }}" class="btn btn-danger mt-3">Supprimer</a>

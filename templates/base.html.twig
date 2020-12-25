@@ -10,8 +10,12 @@
 			{# 'app' must match the first argument to addEntry() in webpack.config.js #}
 			{{ encore_entry_link_tags('app') }}
 			<!-- Renders a link tag (if your module requires any CSS)
-			    <link rel="stylesheet" href="/build/app.css"> -->
+												    <link rel="stylesheet" href="/build/app.css"> -->
 		{% endblock %}
+		<script src="https://cdn.tiny.cloud/1/sw1yozeshuh14fccl6y0czmwtrbj48ee3smf9n8908hb0a9k/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+		<script>
+			tinymce.init({selector: '.contenu'});
+		</script>
 	</head>
 	<body>
 		{% include "navigation.html.twig" %}
@@ -20,8 +24,8 @@
 			{{ encore_entry_script_tags('app') }}
 
 			<!-- Renders app.js & a webpack runtime.js file
-			            <script src="/build/runtime.js"></script>
-			            <script src="/build/app.js"></script> -->
+												            <script src="/build/runtime.js"></script>
+												            <script src="/build/app.js"></script> -->
 		{% endblock %}
 	</body>
 </html>

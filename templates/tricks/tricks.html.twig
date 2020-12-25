@@ -12,6 +12,8 @@
 			</p>
 			<a href="{{ path('app_login') }}" class="btn btn-success">S'identifier</a>
 			<a href="{{ path('app_register') }}" class="btn btn-primary">S'enregister</a>
+		{% else %}
+			<a href="{{ path('add') }}" class="btn btn-success">Ajouter un trick</a>
 		{% endif %}
 		{% if app.user %}
 			<a href="{{ path('add') }}" class="btn btn-success mt-3">Ajouter un trick</a>
