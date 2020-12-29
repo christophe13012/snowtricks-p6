@@ -60,6 +60,8 @@
 							<p class="card-text mt-0 mb-0" style="font-size: 14px" id="comment-contenu-{{comment.id}}">{{comment.content | capitalize}}</p>
 							<p class="card-text mt-0 mb-2">
 								<small class="text-muted" style="font-size: 12px">
+									<img class="rounded-circle mr-1" style="width: 25px; heigth: 25px" src="{{ gravatar(comment.user.email) }}"/>
+
 									{{comment.user.username | capitalize}}
 									le
 									{{comment.createdAt | date("d/m/Y \\à\\ H:i") }}

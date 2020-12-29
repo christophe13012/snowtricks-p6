@@ -19,7 +19,7 @@
 	</div>
 	<div class="ml-5" style="">
 		{% if app.session.get('user') %}
-			<span class="mr-2" style="">Avatar</span>
+			<img class="rounded-circle mr-1" style="width: 50px; heigth: 50px" src="{{ gravatar(app.session.get('user').email) }}"/>
 			<span class="mr-2" style="">{{app.session.get('user').username}}</span>
 			<a href="/logout" class="btn btn-outline-danger btn-sm" style="" href="{{path('logout')}}">Se déconnecter</a>
 		{% else %}
