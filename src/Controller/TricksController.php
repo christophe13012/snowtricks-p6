@@ -5,11 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
 use App\Entity\Tricks;
 use App\Entity\Comment;
 use App\Entity\Category;
-use App\Entity\Image;
 use App\Entity\Photo;
 use App\Entity\Video;
 use App\Form\TrickType;
@@ -131,6 +129,34 @@ class TricksController extends AbstractController
             if ($url3 != "") {
                 $trick->addPhoto($photo3);
             }
+
+            $urlvideo = null;
+            $urlvideo2 = null;
+            $urlvideo3 = null;
+            if (isset($_POST["urlvideo1"])) {
+                $urlvideo = $_POST["urlvideo1"];
+            }
+            if (isset($_POST["urlvideo2"])) {
+                $urlvideo2 = $_POST["urlvideo2"];
+            }
+            if (isset($_POST["urlvideo3"])) {
+                $urlvideo3 = $_POST["urlvideo3"];
+            }
+            $video = new Video();
+            $video->setUrl($urlvideo);
+            if ($urlvideo != "") {
+                $trick->addVideo($video);
+            }
+            $video2 = new Video();
+            $video2->setUrl($urlvideo2);
+            if ($urlvideo2 != "") {
+                $trick->addVideo($video2);
+            }
+            $video3 = new Video();
+            $video3->setUrl($urlvideo3);
+            if ($urlvideo3 != "") {
+                $trick->addVideo($video3);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -161,6 +187,7 @@ class TricksController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $trick = $entityManager->getRepository(Tricks::class)->find($id);
         $photos = $entityManager->getRepository(Photo::class)->findBy(array('trick' => $trick), array('id' => 'asc'));
+        $videos = $entityManager->getRepository(Video::class)->findBy(array('trick' => $trick), array('id' => 'asc'));
         $form = $this->createForm(TrickType::class, $trick, [
             'categories' => $categories
         ]);
@@ -220,6 +247,59 @@ class TricksController extends AbstractController
             if (count($photos) == 3 && $url3 == "") {
                 $trick->removePhoto($photos[2]);
             }
+
+
+            if (isset($_POST["urlvideo1"])) {
+                $urlvideo = $_POST["urlvideo1"];
+                if (count($videos) > 0) {
+                    $videos[0]->setUrl($urlvideo);
+                    $entityManager->persist($videos[0]);
+                } else {
+                    $video1 = new Video();
+                    $video1->setUrl($urlvideo);
+                    if ($urlvideo != "") {
+                        $trick->addVideo($video1);
+                    }
+                }
+                $entityManager->flush();
+            }
+            if (isset($_POST["urlvideo2"])) {
+                $urlvideo2 = $_POST["urlvideo2"];
+                if (count($videos) > 1) {
+                    $videos[1]->setUrl($urlvideo2);
+                    $entityManager->persist($videos[1]);
+                } else {
+                    $video2 = new Video();
+                    $video2->setUrl($urlvideo2);
+                    if ($urlvideo2 != "") {
+                        $trick->addVideo($video2);
+                    }
+                }
+                $entityManager->flush();
+            }
+            if (isset($_POST["urlvideo3"])) {
+                $urlvideo3 = $_POST["urlvideo3"];
+                if (count($videos) > 2) {
+                    $videos[2]->setUrl($urlvideo3);
+                    $entityManager->persist($videos[2]);
+                } else {
+                    $video3 = new Video();
+                    $video3->setUrl($urlvideo3);
+                    if ($urlvideo3 != "") {
+                        $trick->addVideo($video3);
+                    }
+                }
+                $entityManager->flush();
+            }
+            if (count($videos) == 1 && $urlvideo == "") {
+                $trick->removeVideo($videos[0]);
+            }
+            if (count($videos) == 2 && $urlvideo2 == "") {
+                $trick->removeVideo($videos[1]);
+            }
+            if (count($videos) == 3 && $urlvideo3 == "") {
+                $trick->removeVideo($videos[2]);
+            }
             $entityManager->persist($trick);
             $entityManager->flush();
             return $this->redirectToRoute('tricks');
@@ -227,6 +307,7 @@ class TricksController extends AbstractController
         return $this->render('tricks/update.html.twig', [
             'trick' => $trick,
             'photos' => $photos,
+            'videos' => $videos,
             'form' => $form->createView()
         ]);
     }

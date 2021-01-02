@@ -40,16 +40,22 @@ $("#add_photo1").on("click", function (event) {
 });
 
 $("#add_photo2").on("click", function (event) {
-  $("#photo2").show();
-  $("#add_photo2").hide();
-  $("#supp1").hide();
-  $("#add_photo3").show();
+  if ($("#url1").val() != "") {
+    $("#photo2").show();
+    $("#add_photo2").hide();
+    $("#supp1").hide();
+    $("#supp2").show();
+    $("#add_photo3").show();
+  }
 });
 
 $("#add_photo3").on("click", function (event) {
-  $("#photo3").show();
-  $("#supp2").hide();
-  $("#add_photo3").hide();
+  if ($("#url2").val() != "") {
+    $("#photo3").show();
+    $("#supp2").hide();
+    $("#supp3").show();
+    $("#add_photo3").hide();
+  }
 });
 
 $("#add_photoupdate3").on("click", function (event) {
@@ -80,6 +86,61 @@ $("#supp3").on("click", function (event) {
   $("#url3").val("");
   $("#add_photo3").show();
   $("#supp2").show();
+});
+
+$("#add_video1").on("click", function (event) {
+  $("#video1").show();
+  $("#add_video1").hide();
+  $("#add_video2").show();
+});
+
+$("#add_video2").on("click", function (event) {
+  if ($("#urlvideo1").val() != "") {
+    $("#video2").show();
+    $("#add_video2").hide();
+    $("#suppvideo1").hide();
+    $("#suppvideo2").show();
+    $("#add_video3").show();
+  }
+});
+
+$("#add_video3").on("click", function (event) {
+  if ($("#urlvideo2").val() != "") {
+    $("#video3").show();
+    $("#suppvideo2").hide();
+    $("#suppvideo3").show();
+    $("#add_video3").hide();
+  }
+});
+
+$("#add_photoupdate3").on("click", function (event) {
+  $("#photo3").show();
+  $("#add_photoupdate3").hide();
+});
+
+$("#suppvideo1").on("click", function (event) {
+  $("#video1").hide();
+  $("#updatephoto1").hide();
+  $("#urlvideo1").val("");
+  $("#add_video1").show();
+  $("#add_video2").hide();
+});
+
+$("#suppvideo2").on("click", function (event) {
+  $("#video2").hide();
+  $("#updatevideo2").hide();
+  $("#urlvideo2").val("");
+  $("#add_video2").show();
+  $("#suppvideo1").show();
+  $("#add_video3").hide();
+});
+
+$("#suppvideo3").on("click", function (event) {
+  $("#video3").hide();
+  $("#updatevideo3").hide();
+  $("#urlvideo3").val("");
+  $("#add_video3").show();
+  $("#suppvideo2").show();
 });
 
 $("#delete_trick").on("shown.bs.modal", function (event) {

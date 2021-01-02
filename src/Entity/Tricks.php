@@ -55,6 +55,11 @@ class Tricks
      */
     private $photos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", cascade={"persist", "remove"})
+     */
+    private $videos;
+
     public function __construct()
     {
         $this->photos = new ArrayCollection();
@@ -85,18 +90,6 @@ class Tricks
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getVideos(): ?array
-    {
-        return $this->videos;
-    }
-
-    public function setVideos(array $videos): self
-    {
-        $this->videos = $videos;
 
         return $this;
     }
@@ -149,6 +142,36 @@ class Tricks
             // set the owning side to null (unless already changed)
             if ($photo->getTrick() === $this) {
                 $photo->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->photos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->photos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
             }
         }
 

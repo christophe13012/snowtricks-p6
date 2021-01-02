@@ -84,6 +84,9 @@
     "fortawesome/font-awesome": {
         "version": "v4.7.0"
     },
+    "league/html-to-markdown": {
+        "version": "4.10.0"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },
@@ -528,6 +531,12 @@
         "version": "v5.1.8"
     },
     "twig/extra-bundle": {
+        "version": "v3.1.1"
+    },
+    "twig/html-extra": {
+        "version": "v3.1.1"
+    },
+    "twig/markdown-extra": {
         "version": "v3.1.1"
     },
     "twig/twig": {
