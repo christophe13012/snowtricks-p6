@@ -152,3 +152,29 @@ $("#delete_trick").on("shown.bs.modal", function (event) {
       '" class="btn btn-danger p-2" style="font-size: 10px;">Oui</a>'
   );
 });
+
+/*
+$.get("tricks/all", function (data) {
+  console.log(data);
+});
+*/
+
+let clicks = 0;
+
+$("#loadMore").on("click", function (event) {
+  console.log("more");
+  clicks++;
+  let start = 6 * clicks;
+  const url = "/tricks/loadMore/" + start;
+  $.get(url, function (response) {
+    $("#tricks_list").append(response);
+  });
+
+  $.get("/tricks/count", function (data) {
+    let count = data.length;
+    let tricks_loaded = (clicks + 1) * 6;
+    if (tricks_loaded >= count) {
+      $("#loadMore").html("Tous les tricks sont chargés");
+    }
+  });
+});

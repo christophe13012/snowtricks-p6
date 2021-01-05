@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Tricks;
-use App\Entity\Comment;
-use App\Entity\Category;
 use App\Entity\Photo;
 use App\Entity\Video;
+use App\Entity\Tricks;
+use App\Entity\Comment;
 use App\Form\TrickType;
+use App\Entity\Category;
 use App\Repository\UserRepository;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TricksController extends AbstractController
 {
@@ -25,7 +26,7 @@ class TricksController extends AbstractController
     {
         $tricks = $this->getDoctrine()
             ->getRepository(Tricks::class)
-            ->findBy(array(), array('id' => 'desc'));
+            ->findBy(array(), array('id' => 'desc'), 6, 0);
 
         foreach ($tricks as $key => $value) {
             $id = $value->getCategory();
@@ -38,6 +39,39 @@ class TricksController extends AbstractController
         return $this->render('tricks/tricks.html.twig', [
             'tricks' => $tricks,
         ]);
+    }
+
+    /**
+     * @Route("/tricks/loadMore/{start}", name="loadMore", requirements={"start": "\d+"})
+     */
+    public function loadMore($start = 6)
+    {
+        $tricks = $this->getDoctrine()
+            ->getRepository(Tricks::class)
+            ->findBy(array(), array('id' => 'desc'), 6, $start);
+
+        foreach ($tricks as $key => $value) {
+            $id = $value->getCategory();
+            $category = $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->find($id);
+            $value->catName = $category->getName();
+        }
+
+        return $this->render('tricks/loadMore.html.twig', [
+            'tricks' => $tricks
+        ]);
+    }
+
+    /**
+     * @Route("/tricks/count", name="count")
+     */
+    public function getTricksCount()
+    {
+        $tricks = $this->getDoctrine()
+            ->getRepository(Tricks::class)
+            ->findAll();
+        return new JsonResponse($tricks);
     }
 
     /**
