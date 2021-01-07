@@ -21,7 +21,7 @@ class Tricks
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique = true)
      * @Assert\NotBlank(message="Le nom ne doit pas être vide")
      * @Assert\Length(
      *      min = 2,
@@ -59,6 +59,9 @@ class Tricks
      * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", cascade={"persist", "remove"})
      */
     private $videos;
+
+    /** @ORM\Column(type="string") **/
+    private $url_path;
 
     public function __construct()
     {
@@ -176,5 +179,23 @@ class Tricks
         }
 
         return $this;
+    }
+
+    public function getUrlPath()
+    {
+        return $this->url_path;
+    }
+
+    public function setUrlPath($titre)
+    {
+        if (is_string($titre)) {
+            $accents = array("/é/", "/è/", "/ê/", "/ë/", "/ç/", "/à/", "/â/", "/á/", "/ä/", "/ã/", "/å/", "/î/", "/ï/", "/í/", "/ì/", "/ù/", "/ô/", "/ò/", "/ó/", "/ö/");
+            $sans = array("e", "e", "e", "e", "c", "a", "a", "a", "a", "a", "a", "i", "i", "i", "i", "u", "o", "o", "o", "o");
+            $url_path = preg_replace($accents, $sans, $titre);
+            $url_path = str_replace(' ', '-', $url_path);
+            $url_path = preg_replace('/[^A-Za-z0-9\-]/', '', $url_path);
+            $url_path = preg_replace('/-+/', '-', $url_path);
+            $this->url_path = $url_path;
+        }
     }
 }
