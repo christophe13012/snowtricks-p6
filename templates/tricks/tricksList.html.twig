@@ -1,4 +1,4 @@
-<div class="row mt-5">
+<div id="tricks_list" class="row mt-5">
 	{% for trick in tricks %}
 		<div class="col-sm-4 d-flex align-items-stretch mb-5">
 			<div class="card">
@@ -22,17 +22,20 @@
 			</div>
 		</div>
 	{% endfor %}
-	<div class="modal fade" id="delete_trick" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" style="font-size: 14px;">Êtes-vous sûr de vouloir supprimer ce trick</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-footer" id="footer-delete"></div>
+</div>
+<div class="row">
+	<button type="button" id="loadMore" class="btn btn-secondary mx-auto">Charger plus</button>
+</div>
+<div class="modal fade" id="delete_trick" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" style="font-size: 14px;">Êtes-vous sûr de vouloir supprimer ce trick</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
+			<div class="modal-footer" id="footer-delete"></div>
 		</div>
 	</div>
 </div>
