@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New trick
+{% endblock %}
+
+{% block body %}
+	<div class="container p-5">
+		<h3>Créer un nouveau trick</h3>
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+		{{ form_label(form.name, 'Nom du trick', {'label_attr': {'class': 'mt-3'}}) }}
+		{{ form_widget(form.name) }}
+		{{ form_label(form.category, 'Catégorie', {'label_attr': {'class': 'mt-3'}}) }}
+		{{ form_widget(form.category) }}
+		{{ form_label(form.description, 'Description', {'label_attr': {'class': 'mt-3'}}) }}
+		{{ form_widget(form.description, { 'attr': {'class': 'contenu'} }) }}
+		{{ form_label(form.mainImage, 'Url de la photo principale', {'label_attr': {'class': 'mt-3'}}) }}
+		{{ form_widget(form.mainImage) }}
+		<button type="button" class="btn btn-success mt-3" id="add_photo1">Ajouter une photo supplémentaire<i class="fas fa-plus-square ml-2"></i>
+		</button>
+		<div class="mt-3" id="photo1">
+			<label for="url1" class="form-label">Url photo supplémentaire #1</label>
+			<div class="input-group">
+				<input type="text" class="form-control" name="url1" id="url1">
+				<button class="btn btn-danger" type="button" id="supp1">Supprimer</button>
+			</div>
+		</div>
+		<button type="button" class="btn btn-success mt-3" id="add_photo2">Ajouter une photo supplémentaire<i class="fas fa-plus-square ml-2"></i>
+		</button>
+
+		<div class="mt-3" id="photo2">
+			<label for="url2" class="form-label">Url photo supplémentaire #2</label>
+			<div class="input-group">
+				<input type="text" class="form-control" name="url2" id="url2">
+				<button class="btn btn-danger" type="button" id="supp2">Supprimer</button>
+			</div>
+		</div>
+		<button type="button" class="btn btn-success mt-3" id="add_photo3">Ajouter une photo supplémentaire<i class="fas fa-plus-square ml-2"></i>
+		</button>
+		<div class="mt-3" id="photo3">
+			<label for="url3" class="form-label">Url photo supplémentaire #3</label>
+			<div class="input-group">
+				<input type="text" class="form-control" name="url3" id="url3">
+				<button class="btn btn-danger" type="button" id="supp3">Supprimer</button>
+			</div>
+		</div>
+		<div class="mt-1">
+			<button class="btn btn-primary mt-2" class="btn">{{ button_label|default('Enregistrer') }}</button>
+		</div>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

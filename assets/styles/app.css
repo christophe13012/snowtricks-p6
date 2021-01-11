@@ -5,6 +5,31 @@ body {
   background-color: lightgray;
 }
 
+iframe {
+  height: 175px;
+  width: 100%;
+}
+
+#photo1 {
+  display: none;
+}
+
+#photo2 {
+  display: none;
+}
+
+#photo3 {
+  display: none;
+}
+
+#add_photo2 {
+  display: none;
+}
+
+#add_photo3 {
+  display: none;
+}
+
 .active a {
   color: #4285f4 !important;
 }

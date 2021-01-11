@@ -81,6 +81,9 @@
     "egulias/email-validator": {
         "version": "2.1.24"
     },
+    "fortawesome/font-awesome": {
+        "version": "v4.7.0"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },

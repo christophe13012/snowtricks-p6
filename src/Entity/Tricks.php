@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TricksRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,30 +22,43 @@ class Tricks
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le nom ne doit pas être vide")
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
      *      minMessage = "Name must be at least {{ limit }} characters long",
-     *      maxMessage = "Name cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
+     *      maxMessage = "Name cannot be longer than {{ limit }} characters"
      * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="La description ne doit pas être vide")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Merci de choisir une photo")
      */
-    private $url;
+    private $mainImage;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Category::class)
+     * @Assert\NotBlank
      */
     private $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="trick", cascade={"persist", "remove"})
+     */
+    private $photos;
+
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,26 +89,68 @@ class Tricks
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getVideos(): ?array
     {
-        return $this->url;
+        return $this->videos;
     }
 
-    public function setUrl(string $url): self
+    public function setVideos(array $videos): self
     {
-        $this->url = $url;
+        $this->videos = $videos;
 
         return $this;
     }
 
-    public function getCategory(): ?int
+    public function getMainImage(): ?string
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(string $mainImage): self
+    {
+        $this->mainImage = $mainImage;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(int $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Photo[]
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): self
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos[] = $photo;
+            $photo->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): self
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getTrick() === $this) {
+                $photo->setTrick(null);
+            }
+        }
 
         return $this;
     }
