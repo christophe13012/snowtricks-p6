@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	<div class="container p-5 text-center">
+		<div class="row justify-content-md-center">
+			<div class="col-6">
+				<h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+
+				{{ form_start(registrationForm, {attr: {'novalidate': 'novalidate'}}) }}
+
+				{{ form_label(registrationForm.email, 'Email') }}
+				{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control mb-3'}}) }}
+
+				{{ form_label(registrationForm.username, "Nom d'utilisateur") }}
+				{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control mb-3'}}) }}
+
+
+				{{ form_label(registrationForm.password, 'Mot de passe') }}
+				{{ form_widget(registrationForm.password, {'attr': {'class': 'form-control mb-3'}}) }}
+
+
+				{% if not registrationForm.vars.valid %}
+					<div class="alert alert-danger">
+						{{ form_errors(registrationForm.username) }}
+						{{ form_errors(registrationForm.password) }}
+						{{ form_errors(registrationForm.email) }}
+					</div>
+				{% endif %}
+
+				<button class="btn btn-primary">S'enregistrer</button>
+				{{ form_end(registrationForm) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

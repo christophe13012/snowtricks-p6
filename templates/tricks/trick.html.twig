@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trick
+{% endblock %}
+
+{% block body %}
+	<div class="container p-5">
+		<a class="btn btn-outline-primary" href="{{path('tricks')}}">Retour</a>
+		<p>
+			<span class="badge badge-warning p-2 float-right">{{ category }}</span>
+		</p>
+		<h1 style="display: inline-block">{{ trick.name|capitalize }}</h1>
+		<p class="card-text mt-3">{{ trick.description }}</p>
+		<img class="card-img-top imgTrickDetail mt-3" src="{{ trick.url }}" alt="Card image cap">
+		{% if app.user %}
+			<a href="{{ path("update", { 'id': trick.id }) }}" class="btn btn-info mt-3">Editer</a>
+			<a href="{{ path("delete", { 'id': trick.id }) }}" class="btn btn-danger mt-3">Supprimer</a>
+			{% include 'message/index.html.twig' %}
+		{% endif %}
+		{% if not app.session.get('user') %}
+			<div class="alert alert-info mt-3 text-center" role="alert">
+				Pour éditer un trick et commenter, vous devez être enregistré !
+			</div>
+		{% endif %}
+		<div class='row mt-5' id="commentaires">
+			<div class='col-9 mx-auto jumbotron pt-4'>
+				<div>
+					<span class="text-muted" style="font-size: 16px">Commentaires ({{comments|length}})</span>
+					{% if app.session.get('user') %}
+						<button type="button" class="btn btn-primary p-2 ml-2" style="font-size: 10px;" data-toggle="modal" data-target="#modal_comment">
+							Ajouter un commentaire
+						</button>
+					{% endif %}
+				</div>
+				{% for comment in comments %}
+					<div class="card mt-4" style='{{app.session.get('user') and comment.user.id == app.session.get('user').id ? "border : solid #0085A1 1px" : ""}}'>
+						<div class="card-body pt-2 pb-1">
+							<p class="card-text mt-0 mb-0" style="font-size: 14px" id="comment-contenu-{{comment.id}}">{{comment.content | capitalize}}</p>
+							<p class="card-text mt-0 mb-2">
+								<small class="text-muted" style="font-size: 12px">
+									{{comment.user.username | capitalize}}
+									le
+									{{comment.createdAt | date("d/m/Y \\à\\ H:i") }}
+								</small>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+		</div>
+		<div class="modal fade" id="modal_comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Ajouter un commentaire</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="" method="post">
+							<div class="form-group">
+								<textarea class="form-control" required name="content" aria-label="With textarea" placeholder="Commentaire"></textarea>
+							</div>
+
+							<div class="modal-footer">
+								<div class="form-group">
+									<button type="button" class="btn btn-secondary p-2" style="font-size: 10px;" data-dismiss="modal">Annuler</button>
+									<input type="submit" name="valider_com" class="btn btn-primary p-2" style="font-size: 10px;" value="Valider">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
