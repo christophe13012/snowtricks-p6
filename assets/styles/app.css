@@ -22,11 +22,31 @@ iframe {
   display: none;
 }
 
+#video1 {
+  display: none;
+}
+
+#video2 {
+  display: none;
+}
+
+#video3 {
+  display: none;
+}
+
 #add_photo2 {
   display: none;
 }
 
 #add_photo3 {
+  display: none;
+}
+
+#add_video2 {
+  display: none;
+}
+
+#add_video3 {
   display: none;
 }
 

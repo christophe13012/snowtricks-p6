@@ -15,34 +15,66 @@
 		{{ form_widget(form.description, { 'attr': {'class': 'contenu'} }) }}
 		{{ form_label(form.mainImage, 'Url de la photo principale', {'label_attr': {'class': 'mt-3'}}) }}
 		{{ form_widget(form.mainImage) }}
-		<button type="button" class="btn btn-success mt-3" id="add_photo1">Ajouter une photo supplémentaire<i class="fas fa-plus-square ml-2"></i>
-		</button>
-		<div class="mt-3" id="photo1">
-			<label for="url1" class="form-label">Url photo supplémentaire #1</label>
-			<div class="input-group">
-				<input type="text" class="form-control" name="url1" id="url1">
-				<button class="btn btn-danger" type="button" id="supp1">Supprimer</button>
-			</div>
-		</div>
-		<button type="button" class="btn btn-success mt-3" id="add_photo2">Ajouter une photo supplémentaire<i class="fas fa-plus-square ml-2"></i>
-		</button>
 
-		<div class="mt-3" id="photo2">
-			<label for="url2" class="form-label">Url photo supplémentaire #2</label>
-			<div class="input-group">
-				<input type="text" class="form-control" name="url2" id="url2">
-				<button class="btn btn-danger" type="button" id="supp2">Supprimer</button>
-			</div>
-		</div>
-		<button type="button" class="btn btn-success mt-3" id="add_photo3">Ajouter une photo supplémentaire<i class="fas fa-plus-square ml-2"></i>
-		</button>
-		<div class="mt-3" id="photo3">
-			<label for="url3" class="form-label">Url photo supplémentaire #3</label>
-			<div class="input-group">
-				<input type="text" class="form-control" name="url3" id="url3">
-				<button class="btn btn-danger" type="button" id="supp3">Supprimer</button>
-			</div>
-		</div>
+		<ul class="list-group mt-3" style="list-style: none;">
+			<button type="button" class="btn btn-secondary" id="add_photo1">Ajouter une photo supplémentaire<i class="fas fa-image fa-lg ml-2"></i>
+			</button>
+			<button type="button" class="btn btn-secondary" id="add_photo2">Ajouter une photo supplémentaire<i class="fas fa-image fa-lg ml-2"></i>
+			</button>
+			<button type="button" class="btn btn-secondary" id="add_photo3">Ajouter une photo supplémentaire<i class="fas fa-image fa-lg ml-2"></i>
+			</button>
+			<li class="list-group-item list-group-item-primary" id="photo1">
+				<label for="url1" class="form-label">Url photo supplémentaire #1</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="url1" id="url1">
+					<button class="btn btn-danger" type="button" id="supp1">Supprimer</button>
+				</div>
+			</li>
+			<li class="list-group-item list-group-item-primary" id="photo2">
+				<label for="url2" class="form-label">Url photo supplémentaire #2</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="url2" id="url2">
+					<button class="btn btn-danger" type="button" id="supp2">Supprimer</button>
+				</div>
+			</li>
+			<li class="list-group-item list-group-item-primary" id="photo3">
+				<label for="url3" class="form-label">Url photo supplémentaire #3</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="url3" id="url3">
+					<button class="btn btn-danger" type="button" id="supp3">Supprimer</button>
+				</div>
+			</li>
+		</ul>
+
+		<ul class="list-group mt-3" style="list-style: none;">
+			<button type="button" class="btn btn-secondary" id="add_video1">Ajouter une vidéo<i class="fab fa-youtube fa-lg ml-2"></i>
+			</button>
+			<button type="button" class="btn btn-secondary mt-3" id="add_video2">Ajouter une vidéo supplémentaire<i class="fas fa-image fa-lg ml-2"></i>
+			</button>
+			<button type="button" class="btn btn-secondary mt-3" id="add_video3">Ajouter une vidéo supplémentaire<i class="fas fa-image fa-lg ml-2"></i>
+			</button>
+			<li class="list-group-item list-group-item-primary" id="video1">
+				<label for="urlvideo1" class="form-label">Url vidéo #1</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="urlvideo1" id="urlvideo1">
+					<button class="btn btn-danger" type="button" id="suppvideo1">Supprimer</button>
+				</div>
+			</li>
+			<li class="list-group-item list-group-item-primary" id="video2">
+				<label for="urlvideo2" class="form-label">Url vidéo #2</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="urlvideo2" id="urlvideo2">
+					<button class="btn btn-danger" type="button" id="suppvideo2">Supprimer</button>
+				</div>
+			</li>
+			<li class="list-group-item list-group-item-primary" id="video3">
+				<label for="urlvideo3" class="form-label">Url vidéo #3</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="urlvideo3" id="urlvideo3">
+					<button class="btn btn-danger" type="button" id="suppvideo3">Supprimer</button>
+				</div>
+			</li>
+		</ul>
 		<div class="mt-1">
 			<button class="btn btn-primary mt-2" class="btn">{{ button_label|default('Enregistrer') }}</button>
 		</div>
