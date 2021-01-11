@@ -11,7 +11,7 @@
 					<p class="card-text">{{ trick.description | raw}}</p>
 				</div>
 				<div class="card-footer text-muted cardfooter">
-					<a href="{{ path("trick", { 'id': trick.id }) }}" class="btn btn-primary">Plus de détails</a>
+					<a href="trick/{{trick.urlPath}}" class=" btn btn-primary">Plus de détails</a>
 					<a href="{{ path("update", { 'id': trick.id }) }}" style="">
 						<i class="fas fa-pen ml-3"></i>
 					</a>

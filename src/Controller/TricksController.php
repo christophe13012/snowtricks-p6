@@ -75,14 +75,14 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/trick", name="trick")
+     * @Route("/trick/{url_path}", name="trick")
      */
-    public function getTrick(Request $request, UserRepository $userRepository)
+    public function getTrick(Request $request, UserRepository $userRepository, $url_path)
     {
         $id = $request->query->get('id');
         $trick = $this->getDoctrine()
             ->getRepository(Tricks::class)
-            ->find($id);
+            ->findOneBy(array('url_path' => $url_path));
 
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
@@ -90,15 +90,15 @@ class TricksController extends AbstractController
 
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
-            ->findBy(array('id_trick' => $id), array('created_at' => 'desc'));
+            ->findBy(array('id_trick' => $trick->getId()), array('created_at' => 'desc'));
 
         $photos = $this->getDoctrine()
             ->getRepository(Photo::class)
-            ->findBy(array('trick' => $id));
+            ->findBy(array('trick' => $trick->getId()));
 
         $videos = $this->getDoctrine()
             ->getRepository(Video::class)
-            ->findBy(array('trick' => $id));
+            ->findBy(array('trick' => $trick->getId()));
 
         $session = $request->getSession();
         $userLogged = $session->get('user');
@@ -111,7 +111,7 @@ class TricksController extends AbstractController
             $comment = new Comment();
             $comment->setUser($user);
             $comment->setContent($content);
-            $comment->setIdTrick($id);
+            $comment->setIdTrick($trick->getId());
             $now = new \DateTime();
             $now->setTimezone(new \DateTimeZone('Europe/Paris'));
             $comment->setCreatedAt($now);

@@ -84,6 +84,9 @@
     "fortawesome/font-awesome": {
         "version": "v4.7.0"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "league/html-to-markdown": {
         "version": "4.10.0"
     },
@@ -97,7 +100,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.2.21"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -140,6 +143,18 @@
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.3"
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "71599f5b0fdeeeec0fb90e9b17c85e6f5e1350c1"
+        },
+        "files": [
+            "public/.htaccess"
+        ]
     },
     "symfony/asset": {
         "version": "v5.1.8"
