@@ -22,8 +22,7 @@ composer install
 4 - Téléchargez et installez les dépendances front-end du projet avec Npm :
 npm install
 
-5 - Importer le fichier SQL dans votre base de donnée MySQL :
-Récupérer snowtricks-p6.sql dans le dossier public/docs
+5 - Importer le fichier SQL snowtricks-p6.sql dans votre base de donnée MySQL :
 
 6 - Lancer votre serveur et rendez-vous à l'adresse suivante : http://snowtricks.test/
 
