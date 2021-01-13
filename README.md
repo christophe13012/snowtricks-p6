@@ -33,3 +33,5 @@ Accès :
 Identifiez-vous sur le site avec les identifiants suivants
 nom d'utilisateur : christophe13012
 mot de passe : snowtrick13
+
+lien codacy : https://app.codacy.com/gh/christophe13012/snowtricks-p6/dashboard

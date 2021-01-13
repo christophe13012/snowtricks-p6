@@ -331,6 +331,8 @@ class TricksController extends AbstractController
      */
     public function getTrick(Request $request, UserRepository $userRepository, $url_path)
     {
+        $session = $request->getSession();
+        $userLogged = $session->get('user');
         $id = $request->query->get('id');
         $trick = $this->getDoctrine()
             ->getRepository(Tricks::class)
@@ -352,8 +354,7 @@ class TricksController extends AbstractController
             ->getRepository(Video::class)
             ->findBy(array('trick' => $trick->getId()));
 
-        $session = $request->getSession();
-        $userLogged = $session->get('user');
+
 
 
 

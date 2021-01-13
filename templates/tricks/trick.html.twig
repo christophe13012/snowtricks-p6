@@ -11,7 +11,7 @@
 		</p>
 		<h1 style="display: inline-block">{{ trick.name|capitalize }}</h1>
 		<div class="card mt-2 mx-auto" style="width: 35rem; align-self: center">
-			<img class="card-img-top" style="height: 300px" src="{{ trick.mainImage }}" alt="Card image cap">
+			<img id="mainImage" class="card-img-top" style="height: 300px" src="{{ trick.mainImage }}" alt="Card image cap">
 		</div>
 		<p class="card-text mt-3">{{ trick.description | raw }}</p>
 		{% if photos|length > 0 %}
@@ -72,7 +72,6 @@
 					</div>
 				{% endfor %}
 			</div>
-
 		</div>
 		<div class="modal fade" id="modal_comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
