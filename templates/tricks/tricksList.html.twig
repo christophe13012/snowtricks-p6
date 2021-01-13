@@ -1,6 +1,6 @@
 <div id="tricks_list" class="row mt-5">
 	{% for trick in tricks %}
-		<div class="col-sm-4 d-flex align-items-stretch mb-5">
+		<div class="col-12 col-sm-12 col-lg-4 d-flex align-items-stretch mb-5">
 			<div class="card">
 				<img class="card-img-top imgTrick" src="{{ trick.mainImage }}" alt="Card image cap">
 				<div class="card-body">
@@ -12,12 +12,14 @@
 				</div>
 				<div class="card-footer text-muted cardfooter">
 					<a href="trick/{{trick.urlPath}}" class=" btn btn-primary">Plus de détails</a>
-					<a href="{{ path("update", { 'id': trick.id }) }}" style="">
-						<i class="fas fa-pen ml-3"></i>
-					</a>
-					<button style="border: none; background-color: white;" data-toggle="modal" data-target="#delete_trick" data-id="{{trick.id}}">
-						<i class="fas fa-trash-alt ml-3"></i>
-					</button>
+					{% if app.session.get('user') %}
+						<a href="{{ path("update", { 'id': trick.id }) }}" style="">
+							<i class="fas fa-pen ml-3"></i>
+						</a>
+						<button style="border: none; background-color: white;" data-toggle="modal" data-target="#delete_trick" data-id="{{trick.id}}">
+							<i class="fas fa-trash-alt ml-3"></i>
+						</button>
+					{% endif %}
 				</div>
 			</div>
 		</div>

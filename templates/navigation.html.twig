@@ -2,10 +2,7 @@
 	<a class="navbar-brand" href="{{path('home')}}">
 		<img class="" style="width: 30px;heigth: 30px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJuk3VHSd-vUkWc2fRP_T8OkNBAmqoD94N4Q&usqp=CAU" alt="Card image cap">
 		SNOWTRICKS</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarNav">
+	<div class="collapse navbar-collapse" id="navbarNav" style="justify-content: space-between">
 		<ul class="navbar-nav">
 			<li class="nav-item {% if app.request.get('_route') == 'home' %} active{% endif %}">
 				<a class="nav-link" href="{{path('home')}}">Accueil
@@ -15,15 +12,20 @@
 			<li class="nav-item {% if app.request.get('_route') == 'tricks' %} active{% endif %}">
 				<a class="nav-link" href="{{path('tricks')}}">Tricks</a>
 			</li>
+
 		</ul>
+		<div class="nav-item mb-2">
+			{% if app.session.get('user') %}
+				<img class="rounded-circle mr-1" style="width: 50px; heigth: 50px" src="{{ gravatar(app.session.get('user').email) }}"/>
+				<span class="mr-2" style="">{{app.session.get('user').username}}</span>
+				<a href="/logout" class="btn btn-outline-danger btn-sm" style="" href="{{path('logout')}}">Se déconnecter</a>
+			{% else %}
+				<a class="btn btn-outline-primary btn-sm" style="" href="{{path('app_login')}}">Se connecter</a>
+			{% endif %}
+		</div>
 	</div>
-	<div class="ml-5" style="">
-		{% if app.session.get('user') %}
-			<img class="rounded-circle mr-1" style="width: 50px; heigth: 50px" src="{{ gravatar(app.session.get('user').email) }}"/>
-			<span class="mr-2" style="">{{app.session.get('user').username}}</span>
-			<a href="/logout" class="btn btn-outline-danger btn-sm" style="" href="{{path('logout')}}">Se déconnecter</a>
-		{% else %}
-			<a class="btn btn-outline-primary btn-sm" style="" href="{{path('app_login')}}">Se connecter</a>
-		{% endif %}
-	</div>
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
 </nav>

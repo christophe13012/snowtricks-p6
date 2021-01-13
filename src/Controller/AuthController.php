@@ -92,7 +92,7 @@ class AuthController extends AbstractController
                 $expDate = new \DateTime();
                 $expDate->setTimezone(new \DateTimeZone('Europe/Paris'));
                 $expDate->add(new \DateInterval('P1D'));
-                $link = "<a href='http://127.0.0.1:8000/reset_password?key=" . $username . "&amp;token=" . $token . "'>merci de cliquer sur ce lien pour changer votre mot de passe</a>";
+                $link = "<a href='http://snowtricks.test/reset_password?key=" . $username . "&amp;token=" . $token . "'>merci de cliquer sur ce lien pour changer votre mot de passe</a>";
                 $user->setResetLinkToken($token);
                 $user->setExpDate($expDate);
                 $entityManager = $this->getDoctrine()->getManager();
@@ -124,6 +124,7 @@ class AuthController extends AbstractController
                     ->setTo([$email])
                     ->setBody($body, 'text/html', 'utf-8');
                 $mailer->send($message);
+                $this->addFlash('success', 'Merci de vérifier votre mail et cliquer sur le lien !');
             } else {
                 $error = "Utilisateur inconnu";
             }

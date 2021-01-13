@@ -75,67 +75,20 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/trick/{url_path}", name="trick")
-     */
-    public function getTrick(Request $request, UserRepository $userRepository, $url_path)
-    {
-        $id = $request->query->get('id');
-        $trick = $this->getDoctrine()
-            ->getRepository(Tricks::class)
-            ->findOneBy(array('url_path' => $url_path));
-
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->find($trick->getCategory());
-
-        $comments = $this->getDoctrine()
-            ->getRepository(Comment::class)
-            ->findBy(array('id_trick' => $trick->getId()), array('created_at' => 'desc'));
-
-        $photos = $this->getDoctrine()
-            ->getRepository(Photo::class)
-            ->findBy(array('trick' => $trick->getId()));
-
-        $videos = $this->getDoctrine()
-            ->getRepository(Video::class)
-            ->findBy(array('trick' => $trick->getId()));
-
-        $session = $request->getSession();
-        $userLogged = $session->get('user');
-
-
-
-        if (isset($_POST["valider_com"])) {
-            $user = $userRepository->find($userLogged->getId());
-            $content = htmlspecialchars($_POST['content']);
-            $comment = new Comment();
-            $comment->setUser($user);
-            $comment->setContent($content);
-            $comment->setIdTrick($trick->getId());
-            $now = new \DateTime();
-            $now->setTimezone(new \DateTimeZone('Europe/Paris'));
-            $comment->setCreatedAt($now);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
-            return $this->redirect($request->getUri());
-        }
-
-
-        return $this->render('tricks/trick.html.twig', [
-            'trick' => $trick,
-            'category' => $category->getName(), 'comments' => $comments, 'videos' => $videos, 'photos' => $photos
-        ]);
-    }
-    /**
      * @Route("/trick/new", name="add")
      */
     public function addTrick(Request $request)
     {
+        $user = $request->getSession()->get('user');
+        if (!$user) {
+            return $this->redirectToRoute('tricks');
+        }
         $trick = new Tricks();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Votre trick a bien été créé !');
+
             $url = null;
             $url2 = null;
             $url3 = null;
@@ -191,10 +144,12 @@ class TricksController extends AbstractController
             if ($urlvideo3 != "") {
                 $trick->addVideo($video3);
             }
+            $name = $trick->getName();
+            $trick->setUrlPath($name);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('tricks');
         }
         return $this->render('tricks/add.html.twig', [
             'trick' => $trick,
@@ -202,11 +157,16 @@ class TricksController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/trick/update", name="update")
      */
     public function updateTrick(Request $request)
     {
+        $user = $request->getSession()->get('user');
+        if (!$user) {
+            return $this->redirectToRoute('tricks');
+        }
         $categoriesData = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findAll();
@@ -222,12 +182,15 @@ class TricksController extends AbstractController
         $trick = $entityManager->getRepository(Tricks::class)->find($id);
         $photos = $entityManager->getRepository(Photo::class)->findBy(array('trick' => $trick), array('id' => 'asc'));
         $videos = $entityManager->getRepository(Video::class)->findBy(array('trick' => $trick), array('id' => 'asc'));
+
+
         $form = $this->createForm(TrickType::class, $trick, [
             'categories' => $categories
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Votre trick a bien été modifié !');
             $trick = $form->getData();
 
             if (isset($_POST["url1"])) {
@@ -242,7 +205,7 @@ class TricksController extends AbstractController
                         $trick->addPhoto($photo1);
                     }
                 }
-                $entityManager->flush();
+                // $entityManager->flush();
             }
             if (isset($_POST["url2"])) {
                 $url2 = $_POST["url2"];
@@ -256,7 +219,7 @@ class TricksController extends AbstractController
                         $trick->addPhoto($photo2);
                     }
                 }
-                $entityManager->flush();
+                // $entityManager->flush();
             }
             if (isset($_POST["url3"])) {
                 $url3 = $_POST["url3"];
@@ -270,7 +233,7 @@ class TricksController extends AbstractController
                         $trick->addPhoto($photo3);
                     }
                 }
-                $entityManager->flush();
+                //  $entityManager->flush();
             }
             if (count($photos) == 1 && $url == "") {
                 $trick->removePhoto($photos[0]);
@@ -287,7 +250,7 @@ class TricksController extends AbstractController
                 $urlvideo = $_POST["urlvideo1"];
                 if (count($videos) > 0) {
                     $videos[0]->setUrl($urlvideo);
-                    $entityManager->persist($videos[0]);
+                    //    $entityManager->persist($videos[0]);
                 } else {
                     $video1 = new Video();
                     $video1->setUrl($urlvideo);
@@ -295,13 +258,13 @@ class TricksController extends AbstractController
                         $trick->addVideo($video1);
                     }
                 }
-                $entityManager->flush();
+                // $entityManager->flush();
             }
             if (isset($_POST["urlvideo2"])) {
                 $urlvideo2 = $_POST["urlvideo2"];
                 if (count($videos) > 1) {
                     $videos[1]->setUrl($urlvideo2);
-                    $entityManager->persist($videos[1]);
+                    //  $entityManager->persist($videos[1]);
                 } else {
                     $video2 = new Video();
                     $video2->setUrl($urlvideo2);
@@ -309,13 +272,13 @@ class TricksController extends AbstractController
                         $trick->addVideo($video2);
                     }
                 }
-                $entityManager->flush();
+                // $entityManager->flush();
             }
             if (isset($_POST["urlvideo3"])) {
                 $urlvideo3 = $_POST["urlvideo3"];
                 if (count($videos) > 2) {
                     $videos[2]->setUrl($urlvideo3);
-                    $entityManager->persist($videos[2]);
+                    //  $entityManager->persist($videos[2]);
                 } else {
                     $video3 = new Video();
                     $video3->setUrl($urlvideo3);
@@ -323,7 +286,7 @@ class TricksController extends AbstractController
                         $trick->addVideo($video3);
                     }
                 }
-                $entityManager->flush();
+                //  $entityManager->flush();
             }
             if (count($videos) == 1 && $urlvideo == "") {
                 $trick->removeVideo($videos[0]);
@@ -334,12 +297,11 @@ class TricksController extends AbstractController
             if (count($videos) == 3 && $urlvideo3 == "") {
                 $trick->removeVideo($videos[2]);
             }
-            $entityManager->persist($trick);
+            // $entityManager->persist($trick);
             $entityManager->flush();
             return $this->redirectToRoute('tricks');
         }
         return $this->render('tricks/update.html.twig', [
-            'trick' => $trick,
             'photos' => $photos,
             'videos' => $videos,
             'form' => $form->createView()
@@ -351,11 +313,70 @@ class TricksController extends AbstractController
      */
     public function deleteTrick(Request $request)
     {
+        $user = $request->getSession()->get('user');
+        if (!$user) {
+            return $this->redirectToRoute('tricks');
+        }
         $id = $request->query->get('id');
         $entityManager = $this->getDoctrine()->getManager();
         $trick = $entityManager->getRepository(Tricks::class)->find($id);
         $entityManager->remove($trick);
         $entityManager->flush();
+        $this->addFlash('success', 'Le trick a bien été supprimé !');
         return $this->redirectToRoute('tricks');
+    }
+
+    /**
+     * @Route("/trick/{url_path}", name="trick")
+     */
+    public function getTrick(Request $request, UserRepository $userRepository, $url_path)
+    {
+        $id = $request->query->get('id');
+        $trick = $this->getDoctrine()
+            ->getRepository(Tricks::class)
+            ->findOneBy(array('url_path' => $url_path));
+
+        $category = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->find($trick->getCategory());
+
+        $comments = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->findBy(array('id_trick' => $trick->getId()), array('created_at' => 'desc'));
+
+        $photos = $this->getDoctrine()
+            ->getRepository(Photo::class)
+            ->findBy(array('trick' => $trick->getId()));
+
+        $videos = $this->getDoctrine()
+            ->getRepository(Video::class)
+            ->findBy(array('trick' => $trick->getId()));
+
+        $session = $request->getSession();
+        $userLogged = $session->get('user');
+
+
+
+        if (isset($_POST["valider_com"])) {
+            $user = $userRepository->find($userLogged->getId());
+            $content = htmlspecialchars($_POST['content']);
+            $comment = new Comment();
+            $comment->setUser($user);
+            $comment->setContent($content);
+            $comment->setIdTrick($trick->getId());
+            $now = new \DateTime();
+            $now->setTimezone(new \DateTimeZone('Europe/Paris'));
+            $comment->setCreatedAt($now);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            return $this->redirect($request->getUri());
+        }
+
+
+        return $this->render('tricks/trick.html.twig', [
+            'trick' => $trick,
+            'category' => $category->getName(), 'comments' => $comments, 'videos' => $videos, 'photos' => $photos
+        ]);
     }
 }
