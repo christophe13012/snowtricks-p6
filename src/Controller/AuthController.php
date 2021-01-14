@@ -84,8 +84,9 @@ class AuthController extends AbstractController
         $error = null;
         $reset = false;
         $success = false;
-        if (isset($_POST["valider"])) {
-            $username = htmlspecialchars($_POST['username']);
+        if (filter_input(INPUT_POST, 'valider')) {
+            $username = filter_input(INPUT_POST, 'username');
+            // htmlspecialchars($_POST['username']);
             $user = $repository->findOneByUsername($username);
             if ($user) {
                 $username = $user->getUsername();
@@ -130,9 +131,11 @@ class AuthController extends AbstractController
             } else {
                 $error = "Utilisateur inconnu";
             }
-        } else if (isset($_GET["key"]) && isset($_GET["token"])) {
-            $username = $_GET['key'];
-            $token = $_GET['token'];
+        } else if (filter_input(INPUT_GET, 'key') && filter_input(INPUT_GET, 'token')) {
+            //$username = $_GET['key'];
+            //$token = $_GET['token'];
+            $username = filter_input(INPUT_GET, 'key');
+            $token = filter_input(INPUT_GET, 'key');
             $user = $repository->findOneByUsername($username);
             if ($token == $user->getResetLinkToken()) {
                 $curDate = date("Y-m-d H:i:s");
@@ -140,8 +143,9 @@ class AuthController extends AbstractController
                 if ($expDate >= $curDate) {
                     $reset = true;
                 }
-                if (isset($_POST["valider_new"])) {
-                    $newPassword = $_POST['password'];
+                if (filter_input(INPUT_POST, 'valider_new')) {
+                    $newPassword = filter_input(INPUT_POST, 'password');
+                    // $newPassword = $_POST['password'];
                     $encoded = password_hash($newPassword, PASSWORD_DEFAULT);
                     $user->setPassword($encoded);
                     $entityManager = $this->getDoctrine()->getManager();
