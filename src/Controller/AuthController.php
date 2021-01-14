@@ -24,8 +24,10 @@ class AuthController extends AbstractController
         $session = $request->getSession();
         $error = null;
         if (isset($_POST['username']) && isset($_POST['password'])) {
-            $username = htmlspecialchars($_POST['username']);
-            $password = htmlspecialchars($_POST['password']);
+            $username =   filter_input(INPUT_POST, 'username');
+            // htmlspecialchars($_POST['username']);
+            $password = filter_input(INPUT_POST, 'password');
+            //htmlspecialchars($_POST['password']);
             $user = $repository->findOneByUsername($username);
             if ($user) {
                 $encoded = $user->getPassword();
