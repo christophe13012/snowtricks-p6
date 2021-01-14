@@ -89,21 +89,9 @@ class TricksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Votre trick a bien été créé !');
 
-            $url = null;
-            $url2 = null;
-            $url3 = null;
-            if (isset($_POST["url1"])) {
-                $url = filter_input(INPUT_POST, 'url1');
-                //$url = $_POST["url1"];
-            }
-            if (isset($_POST["url2"])) {
-                $url2 = filter_input(INPUT_POST, 'url2');
-                //$url2 = $_POST["url2"];
-            }
-            if (isset($_POST["url3"])) {
-                $url3 = filter_input(INPUT_POST, 'url3');
-                //$url3 = $_POST["url3"];
-            }
+            $url = filter_input(INPUT_POST, 'url1');
+            $url2 = filter_input(INPUT_POST, 'url2');
+            $url3 = filter_input(INPUT_POST, 'url3');
             $photo = new Photo();
             $photo->setUrl($url);
             if ($url != "") {
@@ -119,22 +107,9 @@ class TricksController extends AbstractController
             if ($url3 != "") {
                 $trick->addPhoto($photo3);
             }
-
-            $urlvideo = null;
-            $urlvideo2 = null;
-            $urlvideo3 = null;
-            if (isset($_POST["urlvideo1"])) {
-                $urlvideo = filter_input(INPUT_POST, 'urlvideo1');
-                //$urlvideo = $_POST["urlvideo1"];
-            }
-            if (isset($_POST["urlvideo2"])) {
-                $urlvideo2 = filter_input(INPUT_POST, 'urlvideo2');
-                //$urlvideo2 = $_POST["urlvideo2"];
-            }
-            if (isset($_POST["urlvideo3"])) {
-                $urlvideo3 = filter_input(INPUT_POST, 'urlvideo3');
-                //$urlvideo3 = $_POST["urlvideo3"];
-            }
+            $urlvideo = filter_input(INPUT_POST, 'urlvideo1');
+            $urlvideo2 = filter_input(INPUT_POST, 'urlvideo2');
+            $urlvideo3 = filter_input(INPUT_POST, 'urlvideo3');
             $video = new Video();
             $video->setUrl($urlvideo);
             if ($urlvideo != "") {
