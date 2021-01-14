@@ -92,14 +92,17 @@ class TricksController extends AbstractController
             $url = null;
             $url2 = null;
             $url3 = null;
-            if (isset($_POST["url1"])) {
-                $url = $_POST["url1"];
+            if (filter_input(INPUT_POST, 'url1')) {
+                $url = filter_input(INPUT_POST, 'url1');
+                //$url = $_POST["url1"];
             }
-            if (isset($_POST["url2"])) {
-                $url2 = $_POST["url2"];
+            if (filter_input(INPUT_POST, 'url2')) {
+                $url2 = filter_input(INPUT_POST, 'url2');
+                //$url2 = $_POST["url2"];
             }
-            if (isset($_POST["url3"])) {
-                $url3 = $_POST["url3"];
+            if (filter_input(INPUT_POST, 'url3')) {
+                $url3 = filter_input(INPUT_POST, 'url3');
+                //$url3 = $_POST["url3"];
             }
             $photo = new Photo();
             $photo->setUrl($url);
@@ -120,14 +123,17 @@ class TricksController extends AbstractController
             $urlvideo = null;
             $urlvideo2 = null;
             $urlvideo3 = null;
-            if (isset($_POST["urlvideo1"])) {
-                $urlvideo = $_POST["urlvideo1"];
+            if (filter_input(INPUT_POST, 'urlvideo1')) {
+                $urlvideo = filter_input(INPUT_POST, 'urlvideo1');
+                //$urlvideo = $_POST["urlvideo1"];
             }
-            if (isset($_POST["urlvideo2"])) {
-                $urlvideo2 = $_POST["urlvideo2"];
+            if (filter_input(INPUT_POST, 'urlvideo2')) {
+                $urlvideo2 = filter_input(INPUT_POST, 'urlvideo2');
+                //$urlvideo2 = $_POST["urlvideo2"];
             }
-            if (isset($_POST["urlvideo3"])) {
-                $urlvideo3 = $_POST["urlvideo3"];
+            if (filter_input(INPUT_POST, 'urlvideo3')) {
+                $urlvideo3 = filter_input(INPUT_POST, 'urlvideo3');
+                //$urlvideo3 = $_POST["urlvideo3"];
             }
             $video = new Video();
             $video->setUrl($urlvideo);
@@ -193,8 +199,9 @@ class TricksController extends AbstractController
             $this->addFlash('success', 'Votre trick a bien été modifié !');
             $trick = $form->getData();
 
-            if (isset($_POST["url1"])) {
-                $url = $_POST["url1"];
+            if (filter_input(INPUT_POST, 'url1')) {
+                $url = filter_input(INPUT_POST, 'url1');
+                //$url = $_POST["url1"];
                 if (count($photos) > 0) {
                     $photos[0]->setUrl($url);
                     $entityManager->persist($photos[0]);
@@ -207,8 +214,9 @@ class TricksController extends AbstractController
                 }
                 // $entityManager->flush();
             }
-            if (isset($_POST["url2"])) {
-                $url2 = $_POST["url2"];
+            if (filter_input(INPUT_POST, 'url2')) {
+                $url2 = filter_input(INPUT_POST, 'url2');
+                //$url2 = $_POST["url2"];
                 if (count($photos) > 1) {
                     $photos[1]->setUrl($url2);
                     $entityManager->persist($photos[1]);
@@ -221,8 +229,9 @@ class TricksController extends AbstractController
                 }
                 // $entityManager->flush();
             }
-            if (isset($_POST["url3"])) {
-                $url3 = $_POST["url3"];
+            if (filter_input(INPUT_POST, 'url3')) {
+                $url3 = filter_input(INPUT_POST, 'url3');
+                //$url3 = $_POST["url3"];
                 if (count($photos) > 2) {
                     $photos[2]->setUrl($url3);
                     $entityManager->persist($photos[2]);
@@ -246,8 +255,9 @@ class TricksController extends AbstractController
             }
 
 
-            if (isset($_POST["urlvideo1"])) {
-                $urlvideo = $_POST["urlvideo1"];
+            if (filter_input(INPUT_POST, 'urlvideo1')) {
+                $urlvideo = filter_input(INPUT_POST, 'urlvideo1');
+                //$urlvideo = $_POST["urlvideo1"];
                 if (count($videos) > 0) {
                     $videos[0]->setUrl($urlvideo);
                     //    $entityManager->persist($videos[0]);
@@ -260,8 +270,9 @@ class TricksController extends AbstractController
                 }
                 // $entityManager->flush();
             }
-            if (isset($_POST["urlvideo2"])) {
-                $urlvideo2 = $_POST["urlvideo2"];
+            if (filter_input(INPUT_POST, 'urlvideo2')) {
+                $urlvideo2 = filter_input(INPUT_POST, 'urlvideo2');
+                //$urlvideo2 = $_POST["urlvideo2"];
                 if (count($videos) > 1) {
                     $videos[1]->setUrl($urlvideo2);
                     //  $entityManager->persist($videos[1]);
@@ -274,8 +285,9 @@ class TricksController extends AbstractController
                 }
                 // $entityManager->flush();
             }
-            if (isset($_POST["urlvideo3"])) {
-                $urlvideo3 = $_POST["urlvideo3"];
+            if (filter_input(INPUT_POST, 'urlvideo3')) {
+                $urlvideo3 = filter_input(INPUT_POST, 'urlvideo3');
+                //$urlvideo3 = $_POST["urlvideo3"];
                 if (count($videos) > 2) {
                     $videos[2]->setUrl($urlvideo3);
                     //  $entityManager->persist($videos[2]);
@@ -354,13 +366,10 @@ class TricksController extends AbstractController
             ->getRepository(Video::class)
             ->findBy(array('trick' => $trick->getId()));
 
-
-
-
-
         if (isset($_POST["valider_com"])) {
             $user = $userRepository->find($userLogged->getId());
-            $content = htmlspecialchars($_POST['content']);
+            $content = filter_input(INPUT_POST, 'content');
+            //$content = htmlspecialchars($_POST['content']);
             $comment = new Comment();
             $comment->setUser($user);
             $comment->setContent($content);
