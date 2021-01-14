@@ -92,15 +92,15 @@ class TricksController extends AbstractController
             $url = null;
             $url2 = null;
             $url3 = null;
-            if (filter_input(INPUT_POST, 'url1')) {
+            if (isset($_POST["url1"])) {
                 $url = filter_input(INPUT_POST, 'url1');
                 //$url = $_POST["url1"];
             }
-            if (filter_input(INPUT_POST, 'url2')) {
+            if (isset($_POST["url2"])) {
                 $url2 = filter_input(INPUT_POST, 'url2');
                 //$url2 = $_POST["url2"];
             }
-            if (filter_input(INPUT_POST, 'url3')) {
+            if (isset($_POST["url3"])) {
                 $url3 = filter_input(INPUT_POST, 'url3');
                 //$url3 = $_POST["url3"];
             }
@@ -123,15 +123,15 @@ class TricksController extends AbstractController
             $urlvideo = null;
             $urlvideo2 = null;
             $urlvideo3 = null;
-            if (filter_input(INPUT_POST, 'urlvideo1')) {
+            if (isset($_POST["urlvideo1"])) {
                 $urlvideo = filter_input(INPUT_POST, 'urlvideo1');
                 //$urlvideo = $_POST["urlvideo1"];
             }
-            if (filter_input(INPUT_POST, 'urlvideo2')) {
+            if (isset($_POST["urlvideo2"])) {
                 $urlvideo2 = filter_input(INPUT_POST, 'urlvideo2');
                 //$urlvideo2 = $_POST["urlvideo2"];
             }
-            if (filter_input(INPUT_POST, 'urlvideo3')) {
+            if (isset($_POST["urlvideo3"])) {
                 $urlvideo3 = filter_input(INPUT_POST, 'urlvideo3');
                 //$urlvideo3 = $_POST["urlvideo3"];
             }
