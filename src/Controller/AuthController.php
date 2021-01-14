@@ -23,7 +23,7 @@ class AuthController extends AbstractController
     {
         $session = $request->getSession();
         $error = null;
-        if (isset($_POST['username']) && isset($_POST['password'])) {
+        if (filter_input(INPUT_POST, 'username') && filter_input(INPUT_POST, 'password')) {
             $username =   filter_input(INPUT_POST, 'username');
             // htmlspecialchars($_POST['username']);
             $password = filter_input(INPUT_POST, 'password');

@@ -366,7 +366,7 @@ class TricksController extends AbstractController
             ->getRepository(Video::class)
             ->findBy(array('trick' => $trick->getId()));
 
-        if (isset($_POST["valider_com"])) {
+        if (filter_input(INPUT_POST, 'valider_com')) {
             $user = $userRepository->find($userLogged->getId());
             $content = filter_input(INPUT_POST, 'content');
             //$content = htmlspecialchars($_POST['content']);
