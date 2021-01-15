@@ -24,7 +24,7 @@ class AuthController extends AbstractController
         $session = $request->getSession();
         $error = null;
         if (filter_input(INPUT_POST, 'username') && filter_input(INPUT_POST, 'password')) {
-            $username =   filter_input(INPUT_POST, 'username');
+            $username = filter_input(INPUT_POST, 'username');
             // htmlspecialchars($_POST['username']);
             $password = filter_input(INPUT_POST, 'password');
             //htmlspecialchars($_POST['password']);
@@ -50,6 +50,7 @@ class AuthController extends AbstractController
      */
     public function register(Request $request): Response
     {
+        $session = $request->getSession();
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
@@ -60,6 +61,7 @@ class AuthController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            $session->set('user', $user);
             return $this->redirectToRoute('home');
         }
         return $this->render('auth/register.html.twig', [
